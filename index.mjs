@@ -22,7 +22,7 @@ export const observeMutation = (selector, callback) => {
       if (mutation.type === 'childList') {
         for (const addedNode of mutation.addedNodes) {
           if (addedNode.nodeType === Node.ELEMENT_NODE) {
-            const node = addedNode.matches(CODEVIEW_SELECTOR) ?? addedNode.querySelector(CODEVIEW_SELECTOR);
+            const node = addedNode.matches(selector) ? addedNode : addedNode.querySelector(selector);
 
             if (node) {
               callback(node);
