@@ -15,3 +15,23 @@ export const querySelectorAsync = async (selector, parentNode = document) => {
           observer.observe(parentNode, { childList: true, subtree: true });
       });
 }
+
+export const observeMutation = (selector, callback) => {
+  const observer = new MutationObserver(async (mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        for (const addedNode of mutation.addedNodes) {
+          if (addedNode.nodeType === Node.ELEMENT_NODE) {
+            const node = addedNode.matches(CODEVIEW_SELECTOR) ?? addedNode.querySelector(CODEVIEW_SELECTOR);
+
+            if (node) {
+              callback(node);
+            }
+          }
+        }
+      }
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
