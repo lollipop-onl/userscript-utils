@@ -17,6 +17,10 @@ export const querySelectorAsync = async (selector, parentNode = document) => {
 }
 
 export const observeMutation = (selector, callback) => {
+  for (const el of document.querySelectorAll(selector)) {
+    callback(el);
+  }
+      
   const observer = new MutationObserver(async (mutationsList, observer) => {
     for (const mutation of mutationsList) {
       if (mutation.type === 'childList') {
