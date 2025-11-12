@@ -39,3 +39,8 @@ export const observeMutation = (selector, callback) => {
 
   observer.observe(document.body, { childList: true, subtree: true });
 }
+
+export const setIntervalImmediate = (fn, ...args) => {
+  fn();
+  return setInterval(fn, ...args);
+}
