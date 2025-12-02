@@ -44,3 +44,13 @@ export const setIntervalImmediate = (fn, ...args) => {
   fn();
   return setInterval(fn, ...args);
 }
+
+export const css = (content) => {
+      for (const el of document.getElementsByTagName('style')) {
+            if (el.innerHTML === content) return;
+      }
+
+      const el = document.createElement('style');
+      el.innerHTML = content;
+      document.head.appendChild(el);
+};
