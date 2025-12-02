@@ -26,10 +26,14 @@ export const observeMutation = (selector, callback) => {
       if (mutation.type === 'childList') {
         for (const addedNode of mutation.addedNodes) {
           if (addedNode.nodeType === Node.ELEMENT_NODE) {
-            const node = addedNode.matches(selector) ? addedNode : addedNode.querySelector(selector);
+            const nodes = addedNode.matches(selector) ? [addedNode] : []
+                  
+            for (const node of addedNode.querySelectorAll(selector)) {
+                  nodes.push(node)
+            }
 
-            if (node) {
-              callback(node);
+            for (const node of nodes) {
+                  callback(node);
             }
           }
         }
